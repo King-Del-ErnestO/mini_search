@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mini Search + Cache Demo
+
+A Next.js application demonstrating higher-order functions, caching, and functional programming patterns.
+
+## Features
+
+### Higher-Order Functions (HOFs)
+
+#### Request Wrapper HOFs
+- **`withRetry`**: Adds retry logic with exponential backoff
+- **`withBaseUrl`**: Adds base URL prefixing to API calls
+- **`withRequestEnhancements`**: Composed wrapper combining multiple enhancements
+
+#### Route Middleware HOFs
+- **`withCache`**: In-memory caching with TTL support
+- **`withTiming`**: Performance timing measurements
+- **`withRequestEnhancements`**: Composed wrapper for all enhancements
+
+### Functional Programming
+- **Array Transformations**: Uses `map`, `filter`, and `reduce` to transform API data
+- **Data Grouping**: Groups posts by user with statistical analysis
+- **Search Filtering**: Client-side filtering based on search queries
+
+### API Route
+- **`/api/search`**: Searches JSONPlaceholder posts API
+- **Caching**: 1-minute TTL cache for improved performance
+- **Error Handling**: Comprehensive error handling with retry logic
+- **Data Transformation**: Rich data processing with computed fields
+
+## Tech Stack
+
+- **Next.js 15** with App Router
+- **TypeScript** for type safety
+- **Tailwind CSS** for styling
+- **JSONPlaceholder API** for demo data
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+4. Navigate to the search page to try the demo
+
+## API Endpoints
+
+### GET /api/search
+
+Search posts with optional query parameter.
+
+**Query Parameters:**
+- `q` (optional): Search term to filter posts
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "user": 1,
+      "posts": [...],
+      "totalTitleLength": 265,
+      "averageTitleLength": 37.86,
+      "postCount": 7,
+      "hasLongTitles": true,
+      "longestTitle": {...}
+    }
+  ],
+  "meta": {
+    "totalUsers": 10,
+    "totalPosts": 100,
+    "filteredPosts": 66,
+    "query": "aut"
+  }
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Architecture
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The application demonstrates several key patterns:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Higher-Order Functions**: Composable function enhancement
+2. **Caching Strategy**: In-memory caching with TTL
+3. **Error Handling**: Retry logic with exponential backoff
+4. **Data Processing**: Functional array transformations
+5. **Type Safety**: Full TypeScript implementation
 
-## Learn More
+## Performance Features
 
-To learn more about Next.js, take a look at the following resources:
+- **Caching**: Reduces API calls with 1-minute TTL
+- **Retry Logic**: Handles transient failures gracefully
+- **Performance Timing**: Monitors function execution times
+- **Efficient Filtering**: Client-side search with debouncing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Demo Data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Uses the JSONPlaceholder API (https://jsonplaceholder.typicode.com/posts) which provides 100 sample blog posts from 10 different users.
